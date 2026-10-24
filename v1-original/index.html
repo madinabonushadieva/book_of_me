@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Book of Me</title>
+    <meta name="description" content="The Book of Me — an ongoing story of a young developer.">
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body data-view="intro">
+
+<!-- Fixed cosmic background (CSS only) -->
+<div class="stars" aria-hidden="true"></div>
+
+<!-- Progress line: how many stars are lit -->
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" id="nav">
+    <a class="brand" href="#intro">The Book of Me</a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a href="#map"       data-i18n="nav_map">Star Map</a>
+        <a href="#childhood" data-for="childhood kindergarten school graduation tatu" data-i18n="nav_story">My Story</a>
+        <a href="#about"     data-i18n="nav_about">About Me</a>
+        <a href="#skills"    data-i18n="nav_skills">Skills &amp; Knowledge</a>
+        <a href="#projects"  data-i18n="nav_projects">My Projects</a>
+        <a href="#journey"   data-i18n="nav_journey">The Journey Continues</a>
+    </nav>
+
+    <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" class="active" aria-pressed="true">EN</button>
+        <button type="button" data-lang="uz" aria-pressed="false">UZ</button>
+    </div>
+
+    <button class="menu-btn" id="menuBtn" type="button"
+            aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+        <span></span><span></span>
+    </button>
+</header>
+
+<main id="app">
+
+    <!-- ============ VIEW 1. CINEMATIC INTRO ============ -->
+    <section class="view scene-center" id="view-intro" tabindex="-1">
+        <div class="media">
+            <video class="scene-video" muted loop playsinline preload="none"
+                   poster="assets/posters/intro.jpg"
+                   data-src="assets/videos/intro.mp4"></video>
+            <!-- Spline later: paste your scene URL into data-spline-url -->
+            <div class="spline-slot" data-spline-url=""></div>
+        </div>
+
+        <div class="wrap scene-text">
+            <p class="eyebrow reveal" data-i18n="intro_eyebrow">A story in progress</p>
+            <h1 class="h-xl reveal">The Book of Me</h1>
+            <p class="lead reveal" data-i18n="intro_sub">A girl, a rocket, and a book that holds her whole story.</p>
+            <a class="btn reveal" href="#map" data-i18n="intro_cta">Open the book</a>
+        </div>
+    </section>
+
+    <!-- ============ VIEW 2. STAR MAP ============
+         Every .star is one chapter. Coordinates are in % of the screen:
+         lx / ly = landscape (computer), px / py = portrait (phone).
+         Unwritten stars (class "future") are the story that is still to come. -->
+    <section class="view view-map" id="view-map" tabindex="-1">
+        <div class="map-hud">
+            <div class="wrap">
+                <p class="eyebrow" data-i18n="map_eyebrow">Star map</p>
+                <h2 class="h-lg map-title" data-i18n="map_title">Every star is a chapter.</h2>
+                <p class="map-count">
+                    <span id="litCount">0</span> / 9 <span data-i18n="map_lit">stars lit</span>
+                    · <span data-i18n="map_hint">Tap a star to open it.</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="sky" id="sky">
+            <svg class="sky-lines" id="skyLines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+            <a class="star" href="#childhood"   data-id="childhood"   data-lx="6"    data-ly="64" data-px="34" data-py="28">
+                <i class="dot"></i><span class="lbl" data-i18n="sc1_t">Childhood</span></a>
+            <a class="star" href="#kindergarten" data-id="kindergarten" data-lx="14.8" data-ly="42" data-px="64" data-py="34.4">
+                <i class="dot"></i><span class="lbl" data-i18n="sc2_t">Kindergarten</span></a>
+            <a class="star" href="#school"      data-id="school"      data-lx="23.6" data-ly="60" data-px="36" data-py="40.8">
+                <i class="dot"></i><span class="lbl" data-i18n="sc3_t">School</span></a>
+            <a class="star" href="#graduation"  data-id="graduation"  data-lx="32.4" data-ly="38" data-px="66" data-py="47.2">
+                <i class="dot"></i><span class="lbl" data-i18n="sc4_t">Graduation</span></a>
+            <a class="star" href="#tatu"        data-id="tatu"        data-lx="41.2" data-ly="58" data-px="32" data-py="53.6">
+                <i class="dot"></i><span class="lbl">TATU</span></a>
+            <a class="star" href="#about"       data-id="about"       data-lx="50"   data-ly="36" data-px="66" data-py="60">
+                <i class="dot"></i><span class="lbl" data-i18n="lbl_about">About me</span></a>
+            <a class="star" href="#skills"      data-id="skills"      data-lx="58.8" data-ly="60" data-px="36" data-py="66.4">
+                <i class="dot"></i><span class="lbl" data-i18n="lbl_skills">Skills</span></a>
+            <a class="star" href="#projects"    data-id="projects"    data-lx="67.6" data-ly="40" data-px="64" data-py="72.8">
+                <i class="dot"></i><span class="lbl" data-i18n="lbl_projects">Projects</span></a>
+            <a class="star journey" href="#journey" data-id="journey" data-lx="76.4" data-ly="56" data-px="34" data-py="79.2">
+                <i class="dot"></i><span class="lbl" data-i18n="lbl_journey">The Journey</span></a>
+
+            <!-- Unwritten stars: not lit, no name. To add a real chapter later, turn one into an <a>. -->
+            <button class="star future" type="button" data-lx="85.2" data-ly="40" data-px="66" data-py="85.6" aria-label="?">
+                <i class="dot"></i><span class="lbl">?</span></button>
+            <button class="star future" type="button" data-lx="94"   data-ly="58" data-px="36" data-py="92" aria-label="?">
+                <i class="dot"></i><span class="lbl">?</span></button>
+        </div>
+    </section>
+
+    <!-- ============ CHAPTERS (opened from the star map) ============
+         To change a video: replace the file in assets/videos/ (same name),
+         or change data-src. Poster = first frame shown while the video loads. -->
+
+    <article class="view chapter" id="view-childhood" tabindex="-1">
+        <div class="media">
+            <video class="scene-video" muted loop playsinline preload="none"
+                   poster="assets/posters/childhood.jpg"
+                   data-src="assets/videos/childhood.mp4"></video>
+        </div>
+        <div class="wrap scene-text">
+            <span class="chapter-no reveal">01</span>
+            <p class="eyebrow reveal"><span data-i18n="chapter">Chapter</span> 01</p>
+            <h3 class="h-lg reveal" data-i18n="sc1_t">Childhood</h3>
+            <!-- To add a short story text: <p class="lead reveal">Your one or two sentences.</p> -->
+            <!-- (EN/UZ: use data-i18n="your_key" and add the key to script.js) -->
+        </div>
+    </article>
+
+    <article class="view chapter" id="view-kindergarten" tabindex="-1">
+        <div class="media">
+            <video class="scene-video" muted loop playsinline preload="none"
+                   poster="assets/posters/kindergarten.jpg"
+                   data-src="assets/videos/kindergarten.mp4"></video>
+        </div>
+        <div class="wrap scene-text">
+            <span class="chapter-no reveal">02</span>
+            <p class="eyebrow reveal"><span data-i18n="chapter">Chapter</span> 02</p>
+            <h3 class="h-lg reveal" data-i18n="sc2_t">Kindergarten</h3>
+            <!-- To add a short story text: <p class="lead reveal">Your one or two sentences.</p> -->
+            <!-- (EN/UZ: use data-i18n="your_key" and add the key to script.js) -->
+        </div>
+    </article>
+
+    <article class="view chapter" id="view-school" tabindex="-1">
+        <div class="media">
+            <video class="scene-video" muted loop playsinline preload="none"
+                   poster="assets/posters/school.jpg"
+                   data-src="assets/videos/school.mp4"></video>
+        </div>
+        <div class="wrap scene-text">
+            <span class="chapter-no reveal">03</span>
+            <p class="eyebrow reveal"><span data-i18n="chapter">Chapter</span> 03</p>
+            <h3 class="h-lg reveal" data-i18n="sc3_t">School</h3>
+            <!-- To add a short story text: <p class="lead reveal">Your one or two sentences.</p> -->
+            <!-- (EN/UZ: use data-i18n="your_key" and add the key to script.js) -->
+        </div>
+    </article>
+
+    <article class="view chapter" id="view-graduation" tabindex="-1">
+        <div class="media">
+            <video class="scene-video" muted loop playsinline preload="none"
+                   poster="assets/posters/graduation.jpg"
+                   data-src="assets/videos/graduation.mp4"></video>
+        </div>
+        <div class="wrap scene-text">
+            <span class="chapter-no reveal">04</span>
+            <p class="eyebrow reveal"><span data-i18n="chapter">Chapter</span> 04 · <span data-i18n="sc4_tag">Gold medal</span></p>
+            <h3 class="h-lg reveal" data-i18n="sc4_t">Graduation</h3>
+            <!-- To add a short story text: <p class="lead reveal">Your one or two sentences.</p> -->
+            <!-- (EN/UZ: use data-i18n="your_key" and add the key to script.js) -->
+        </div>
+    </article>
+
+    <article class="view chapter" id="view-tatu" tabindex="-1">
+        <div class="media">
+            <video class="scene-video" muted loop playsinline preload="none"
+                   poster="assets/posters/tatu.jpg"
+                   data-src="assets/videos/tatu.mp4"></video>
+        </div>
+        <div class="wrap scene-text">
+            <span class="chapter-no reveal">05</span>
+            <p class="eyebrow reveal"><span data-i18n="chapter">Chapter</span> 05</p>
+            <h3 class="h-lg reveal">TATU</h3>
+            <!-- To add a short story text: <p class="lead reveal">Your one or two sentences.</p> -->
+            <!-- (EN/UZ: use data-i18n="your_key" and add the key to script.js) -->
+        </div>
+    </article>
+
+    <!-- ============ ABOUT ME ============ -->
+    <article class="view chapter chapter-panel" id="view-about" tabindex="-1">
+        <div class="media"></div>
+        <div class="wrap scene-text about-grid">
+            <!-- Profile links. To add a photo later: put it in assets/images/me.jpg and add
+                 <img class="portrait" src="assets/images/me.jpg" alt="Portrait"> above the links. -->
+            <div class="profile-links reveal">
+                <p class="eyebrow" data-i18n="profiles">Profiles</p>
+                <a class="btn-link" href="https://github.com/madinabonushadieva" target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="link_github">GitHub Profile</span><span aria-hidden="true">↗</span></a>
+                <a class="btn-link" href="https://www.linkedin.com/in/madinabonu-shadieva-617557445/" target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="link_linkedin">LinkedIn Profile</span><span aria-hidden="true">↗</span></a>
+            </div>
+            <div>
+                <p class="eyebrow reveal" data-i18n="nav_about">About Me</p>
+                <h2 class="h-lg reveal" data-i18n="about_title">Hello, I’m Madinabonu.</h2>
+                <p class="body reveal" data-i18n="about_p1">I am a Computer Engineering student at Tashkent University of Information Technologies (TATU). I am learning to program, and I learn best by working on practical projects.</p>
+                <p class="body reveal" data-i18n="about_p2">I am interested in frontend, backend and game development. I also have a foundation in computer networks and network protocols, and I have worked with Arduino and Cisco Packet Tracer. I am still building my skills and learning new technologies.</p>
+                <dl class="facts reveal">
+                    <div><dt data-i18n="fact_uni">University</dt><dd>TATU</dd></div>
+                    <div><dt data-i18n="fact_field">Field</dt><dd data-i18n="ph_field">Computer Engineering</dd></div>
+                </dl>
+            </div>
+        </div>
+    </article>
+
+    <!-- ============ SKILLS & KNOWLEDGE ============ -->
+    <article class="view chapter chapter-panel" id="view-skills" tabindex="-1">
+        <div class="media"></div>
+        <div class="wrap scene-text">
+            <p class="eyebrow reveal" data-i18n="nav_skills">Skills &amp; Knowledge</p>
+            <h2 class="h-lg reveal" data-i18n="skills_title">What I know, and what I am still learning.</h2>
+
+            <p class="body reveal" data-i18n="skills_note">I know these to different degrees. The list shows what I work with, not a ranking.</p>
+
+            <!-- Add or remove <li> lines freely. -->
+            <div class="skill-groups">
+                <div class="reveal">
+                    <h3 class="list-title" data-i18n="sg_front">Frontend</h3>
+                    <ul class="list compact"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+                </div>
+                <div class="reveal">
+                    <h3 class="list-title" data-i18n="sg_back">Backend</h3>
+                    <ul class="list compact"><li>Node.js</li><li>NestJS</li></ul>
+                </div>
+                <div class="reveal">
+                    <h3 class="list-title" data-i18n="sg_db">Databases</h3>
+                    <ul class="list compact"><li>PostgreSQL</li><li>MongoDB</li><li>MySQL</li><li>Oracle Database</li></ul>
+                </div>
+                <div class="reveal">
+                    <h3 class="list-title" data-i18n="sg_lang">Programming languages</h3>
+                    <ul class="list compact"><li>C</li><li>C++</li><li>Python</li></ul>
+                </div>
+                <div class="reveal">
+                    <h3 class="list-title" data-i18n="sg_other">Other technical skills</h3>
+                    <ul class="list compact">
+                        <li data-i18n="sk_git">Working with Git and GitHub</li>
+                        <li data-i18n="sk_net">Computer networks and network protocols</li>
+                        <li>Cisco Packet Tracer</li>
+                        <li>Arduino</li>
+                        <li>Blender</li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <h3 class="list-title" data-i18n="sg_next">Next to Learn</h3>
+                    <ul class="list compact"><li>React</li></ul>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- ============ MY PROJECTS ============ -->
+    <article class="view chapter chapter-panel" id="view-projects" tabindex="-1">
+        <div class="media"></div>
+        <div class="wrap scene-text">
+            <p class="eyebrow reveal" data-i18n="nav_projects">My Projects</p>
+            <h2 class="h-lg reveal" data-i18n="projects_title">Projects I have worked on and ideas I am exploring.</h2>
+
+            <!-- Each .project is one row. Add buttons ONLY with real links. Put this inside the <div> of a project,
+                 after the <p>, and replace the URLs:
+                 <div class="project-actions">
+                     <a class="btn-link small" href="REAL-REPOSITORY-URL" target="_blank" rel="noopener noreferrer"><span data-i18n="btn_code">View Code</span><span aria-hidden="true">↗</span></a>
+                     <a class="btn-link small" href="REAL-DEMO-URL" target="_blank" rel="noopener noreferrer"><span data-i18n="btn_demo">Live Demo</span><span aria-hidden="true">↗</span></a>
+                 </div>
+                 Status badge (only if true): <span class="badge" data-i18n="badge_dev">In Development</span> or badge_proto / badge_concept -->
+            <div class="projects">
+                <article class="project reveal">
+                    <span class="project-no">01</span>
+                    <div>
+                        <h3>UzChess</h3>
+                        <p data-i18n="proj1_desc">A chess project for Uzbek-language users. My work on it focused on the backend.</p>
+                    </div>
+                </article>
+                <article class="project reveal">
+                    <span class="project-no">02</span>
+                    <div>
+                        <h3>Smart Kids</h3>
+                        <p data-i18n="proj2_desc">A website with educational activities and games for children.</p>
+                    </div>
+                </article>
+                <article class="project reveal">
+                    <span class="project-no">03</span>
+                    <div>
+                        <h3>DoctorUZ <span class="badge" data-i18n="badge_concept">Concept</span></h3>
+                        <p data-i18n="proj3_desc">A project idea related to medical services.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="project-actions reveal">
+                <a class="btn-link small" href="https://github.com/madinabonushadieva" target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="link_github">GitHub Profile</span><span aria-hidden="true">↗</span></a>
+            </div>
+        </div>
+    </article>
+
+    <!-- ============ THE JOURNEY CONTINUES ============ -->
+    <article class="view chapter scene-center" id="view-journey" tabindex="-1">
+        <div class="media">
+            <video class="scene-video" muted loop playsinline preload="none"
+                   poster="assets/posters/journey.jpg"
+                   data-src="assets/videos/journey.mp4"></video>
+            <!-- Spline later: paste your scene URL into data-spline-url -->
+            <div class="spline-slot" data-spline-url=""></div>
+        </div>
+        <div class="wrap scene-text">
+            <p class="eyebrow reveal" data-i18n="nav_journey">The Journey Continues</p>
+            <h2 class="h-lg reveal" data-i18n="journey_title">The story is still being written.</h2>
+            <p class="lead reveal" data-i18n="journey_p">Still learning. Still building. The next chapters are not written yet.</p>
+            <p class="tbc reveal" data-i18n="tbc">TO BE CONTINUED...</p>
+            <div class="project-actions links-center reveal">
+                <a class="btn-link small" href="https://github.com/madinabonushadieva" target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="link_github">GitHub Profile</span><span aria-hidden="true">↗</span></a>
+                <a class="btn-link small" href="https://www.linkedin.com/in/madinabonu-shadieva-617557445/" target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="link_linkedin">LinkedIn Profile</span><span aria-hidden="true">↗</span></a>
+            </div>
+        </div>
+    </article>
+
+</main>
+
+<!-- Chapter controls: previous / back to map / sound / next -->
+<nav class="chapter-nav" id="chapterNav" aria-label="Chapters">
+    <a class="cn-btn" id="cnPrev" href="#map">
+        <span aria-hidden="true">←</span> <span data-i18n="prev">Previous</span>
+    </a>
+    <a class="cn-map" href="#map">
+        <span data-i18n="to_map">Star map</span> <span class="cn-count" id="cnCount">1 / 9</span>
+    </a>
+    <button class="cn-sound" id="soundBtn" type="button" aria-pressed="false"
+            data-i18n-aria="sound" aria-label="Sound">♪</button>
+    <a class="cn-btn" id="cnNext" href="#map">
+        <span id="cnNextLabel" data-i18n="next">Next</span> <span aria-hidden="true">→</span>
+    </a>
+</nav>
+
+<p class="toast" id="toast" role="status" data-i18n="future_hint">This star is not written yet.</p>
+
+</body>
+</html>

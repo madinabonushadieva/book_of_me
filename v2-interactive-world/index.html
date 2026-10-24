@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>The Book of Me — Interactive World</title>
+    <meta name="description" content="Portfolio of Madinabonu, Computer Engineering student, with an optional isometric world to explore.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="world.css">
+    <script src="content.js"></script>
+    <script src="world.js" defer></script>
+    <script src="site.js" defer></script>
+</head>
+<body>
+
+<div class="stars" aria-hidden="true"></div>
+
+<!-- ============ PORTFOLIO ============ -->
+<div id="site">
+    <header class="nav" id="nav">
+        <a class="brand" href="#top">The Book of Me</a>
+
+        <nav class="nav-links" id="navLinks" aria-label="Main">
+            <a href="#about"    data-i18n="nav_about">About</a>
+            <a href="#skills"   data-i18n="nav_skills">Skills</a>
+            <a href="#projects" data-i18n="nav_projects">Projects</a>
+            <a href="#education" data-i18n="nav_edu">Education</a>
+            <a href="#contact"  data-i18n="nav_contact">Contact</a>
+        </nav>
+
+        <button class="explore-btn" type="button" data-explore>
+            <span class="gem" aria-hidden="true"></span><span data-i18n="explore">Explore My World</span>
+        </button>
+
+        <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-lang="en" class="active" aria-pressed="true">EN</button>
+            <button type="button" data-lang="uz" aria-pressed="false">UZ</button>
+        </div>
+
+        <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+            <span></span><span></span>
+        </button>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero" id="top">
+            <div class="wrap hero-grid">
+                <div>
+                    <p class="eyebrow" data-i18n="hero_eyebrow">Computer Engineering student · TATU</p>
+                    <h1 class="h-xl">Madinabonu</h1>
+                    <p class="lead" data-i18n="hero_sub">I am learning to program, and I learn best by building practical projects. I am interested in frontend, backend and game development.</p>
+                    <div class="cta-row">
+                        <button class="btn primary" type="button" data-explore data-i18n="explore">Explore My World</button>
+                        <a class="btn" href="#projects" data-i18n="hero_cta2">View projects</a>
+                    </div>
+                    <p class="hint" data-i18n="hero_hint">Optional: everything is also in the portfolio below. The world is a creative way to explore it.</p>
+                </div>
+                <!-- small preview of the world: a floating island (pure CSS/SVG, no images) -->
+                <button class="island-preview" type="button" data-explore aria-label="Explore My World">
+                    <svg viewBox="0 0 320 260" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="rock" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1740"/><stop offset="1" stop-color="#0a0a1c"/></linearGradient>
+                        </defs>
+                        <polygon points="40,120 160,180 280,120 240,190 200,215 160,245 130,215 90,195" fill="url(#rock)"/>
+                        <polygon points="160,60 280,120 160,180 40,120" fill="#26347a" stroke="#d6b370" stroke-opacity=".6"/>
+                        <polygon points="40,120 160,180 160,196 40,136" fill="#141c47"/>
+                        <polygon points="160,180 280,120 280,136 160,196" fill="#0e1538"/>
+                        <!-- tiny house -->
+                        <polygon points="130,104 160,119 190,104 160,89" fill="#e9e2cf"/>
+                        <polygon points="130,104 160,119 160,142 130,127" fill="#c9c1ab"/>
+                        <polygon points="160,119 190,104 190,127 160,142" fill="#a39c88"/>
+                        <polygon points="124,104 160,60 196,104 160,121" fill="#b9914f"/>
+                        <!-- book glow + stars -->
+                        <circle cx="80" cy="120" r="9" fill="#d6b370" opacity=".85"><animate attributeName="opacity" values=".4;.95;.4" dur="3s" repeatCount="indefinite"/></circle>
+                        <circle cx="250" cy="36" r="2.5" fill="#fff"/><circle cx="60" cy="40" r="2" fill="#fff"/><circle cx="288" cy="86" r="1.8" fill="#f3dcae"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="section" id="about">
+            <div class="wrap">
+                <p class="eyebrow" data-i18n="nav_about">About</p>
+                <h2 class="h-lg" data-i18n="about_title">Hello, I’m Madinabonu.</h2>
+                <div class="two-col">
+                    <div>
+                        <p class="body" data-i18n="about_p1"></p>
+                        <p class="body" data-i18n="about_p2"></p>
+                    </div>
+                    <dl class="facts">
+                        <div><dt data-i18n="fact_uni">University</dt><dd>TATU</dd></div>
+                        <div><dt data-i18n="fact_field">Field</dt><dd data-i18n="fact_field_v">Computer Engineering</dd></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS (filled from content.js) -->
+        <section class="section alt" id="skills">
+            <div class="wrap">
+                <p class="eyebrow" data-i18n="nav_skills">Skills</p>
+                <h2 class="h-lg" data-i18n="skills_title">Skills &amp; Knowledge</h2>
+                <p class="body" data-i18n="skills_note"></p>
+                <div class="skill-groups" id="skillGroups"></div>
+            </div>
+        </section>
+
+        <!-- PROJECTS (filled from content.js) -->
+        <section class="section" id="projects">
+            <div class="wrap">
+                <p class="eyebrow" data-i18n="nav_projects">Projects</p>
+                <h2 class="h-lg" data-i18n="projects_title">Projects</h2>
+                <p class="body" data-i18n="projects_note"></p>
+                <div class="projects" id="projectList"></div>
+                <div class="actions">
+                    <a class="btn-link" data-link="github" target="_blank" rel="noopener noreferrer">
+                        <span data-i18n="link_github">GitHub Profile</span><span aria-hidden="true">↗</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section class="section alt" id="education">
+            <div class="wrap">
+                <p class="eyebrow" data-i18n="nav_edu">Education</p>
+                <h2 class="h-lg" data-i18n="edu_title">Education</h2>
+                <ol class="timeline">
+                    <li><h3 data-i18n="edu1_t"></h3><p data-i18n="edu1_d"></p></li>
+                    <li><h3 data-i18n="edu2_t"></h3><p data-i18n="edu2_d"></p></li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="section" id="contact">
+            <div class="wrap">
+                <p class="eyebrow" data-i18n="nav_contact">Contact</p>
+                <h2 class="h-lg" data-i18n="contact_title">Contact</h2>
+                <p class="body" data-i18n="contact_p"></p>
+                <div class="actions">
+                    <a class="btn-link" data-link="github" target="_blank" rel="noopener noreferrer">
+                        <span data-i18n="link_github">GitHub Profile</span><span aria-hidden="true">↗</span></a>
+                    <a class="btn-link" data-link="linkedin" target="_blank" rel="noopener noreferrer">
+                        <span data-i18n="link_linkedin">LinkedIn Profile</span><span aria-hidden="true">↗</span></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot"><div class="wrap"><span data-i18n="footer">The Book of Me — a story in progress.</span></div></footer>
+</div>
+
+<!-- ============ ISOMETRIC WORLD (opens over the portfolio) ============ -->
+<div id="world" class="world" hidden aria-hidden="true" role="dialog" aria-label="Interactive World">
+    <canvas id="worldCanvas"></canvas>
+
+    <div class="w-top">
+        <button class="w-btn" id="wBack" type="button"><span aria-hidden="true">←</span> <span data-i18n="w_back">Back to portfolio</span></button>
+        <div class="w-top-right">
+            <label class="w-places"><span class="sr" data-i18n="w_places">Places</span>
+                <select id="wPlaces" aria-label="Places"></select></label>
+            <button class="w-btn w-lang" data-lang="en" type="button">EN</button>
+            <button class="w-btn w-lang" data-lang="uz" type="button">UZ</button>
+            <button class="w-btn w-help" id="wHelp" type="button" aria-label="Controls">?</button>
+        </div>
+    </div>
+
+    <p class="w-controls" id="wControls" data-i18n="w_controls"></p>
+
+    <button class="w-prompt" id="wPrompt" type="button" hidden></button>
+
+    <!-- touch controls (shown on phones/tablets) -->
+    <div class="joy" id="joy" aria-hidden="true"><div class="knob" id="joyKnob"></div></div>
+    <button class="act" id="wAct" type="button" aria-label="Interact">E</button>
+
+    <!-- info window -->
+    <div class="w-panel" id="wPanel" hidden role="dialog" aria-modal="true" aria-labelledby="wPanelTitle">
+        <div class="w-card">
+            <button class="w-x" id="wClose" type="button" aria-label="Close">×</button>
+            <div class="w-media" id="wMedia" hidden></div>
+            <p class="eyebrow" id="wPanelEyebrow"></p>
+            <h2 id="wPanelTitle"></h2>
+            <div id="wPanelBody"></div>
+        </div>
+    </div>
+
+    <!-- first-visit welcome -->
+    <div class="w-intro" id="wIntro" hidden>
+        <div class="w-card small">
+            <h2 data-i18n="w_intro_t">Welcome to my world</h2>
+            <p data-i18n="w_intro_p"></p>
+            <p class="w-keys" data-i18n="w_controls"></p>
+            <button class="btn primary" id="wStart" type="button" data-i18n="w_start">Start exploring</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

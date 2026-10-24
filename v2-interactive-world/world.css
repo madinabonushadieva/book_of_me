@@ -1,0 +1,97 @@
+/* ============ WORLD (isometric game layer) ============ */
+.world { position: fixed; inset: 0; z-index: 100; background: var(--bg); touch-action: none; user-select: none; -webkit-user-select: none; }
+#worldCanvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.w-top {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+    padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) 0.75rem max(0.75rem, env(safe-area-inset-left));
+    background: linear-gradient(to bottom, rgba(5, 8, 22, 0.75), transparent); pointer-events: none;
+}
+.w-top > * { pointer-events: auto; }
+.w-top-right { display: flex; gap: 0.4rem; align-items: center; }
+.w-btn, .w-places select {
+    min-height: 40px; padding: 0 0.9rem; border: 1px solid var(--line); background: rgba(5, 8, 22, 0.7); color: var(--text);
+    font: inherit; font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s;
+}
+.w-btn:hover, .w-btn:focus-visible { background: var(--gold); color: var(--bg); }
+.w-lang.active { color: var(--gold); border-color: var(--gold); }
+.w-lang.active:hover { color: var(--bg); }
+.w-help { width: 40px; padding: 0; }
+.w-places select { max-width: 11rem; padding-right: 0.4rem; text-transform: none; letter-spacing: 0.03em; font-size: 0.8rem; }
+.w-places select option { background: #0e1646; color: var(--text); }
+
+.w-controls {
+    position: absolute; left: 0; right: 0; bottom: max(0.9rem, env(safe-area-inset-bottom)); z-index: 2; text-align: center;
+    font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); pointer-events: none; text-shadow: 0 1px 6px var(--bg);
+    transition: opacity 0.8s;
+}
+.w-controls.fade { opacity: 0; }
+
+.w-prompt {
+    position: absolute; left: 50%; bottom: 4rem; transform: translateX(-50%); z-index: 4; max-width: calc(100vw - 2rem);
+    padding: 0.7rem 1.3rem; background: rgba(14, 22, 70, 0.92); border: 1px solid var(--gold); color: var(--text);
+    font: inherit; font-size: 0.9rem; cursor: pointer; display: inline-flex; gap: 0.8rem; align-items: center; white-space: nowrap;
+    animation: promptIn 0.25s ease;
+}
+.w-prompt kbd {
+    font: inherit; font-size: 0.75rem; padding: 0.1rem 0.5rem; border: 1px solid var(--gold); color: var(--gold); background: rgba(214, 179, 112, 0.12);
+}
+@keyframes promptIn { from { opacity: 0; transform: translate(-50%, 8px); } }
+
+/* touch controls: only on touch screens */
+.joy, .act { display: none; }
+@media (pointer: coarse) {
+    .joy {
+        display: block; position: absolute; z-index: 3; left: max(1.2rem, env(safe-area-inset-left)); bottom: max(1.6rem, env(safe-area-inset-bottom));
+        width: 132px; height: 132px; border-radius: 50%; border: 1px solid var(--line); background: rgba(5, 8, 22, 0.45); touch-action: none;
+    }
+    .joy .knob { position: absolute; left: 50%; top: 50%; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%; background: rgba(214, 179, 112, 0.55); border: 1px solid var(--gold); }
+    .act {
+        display: grid; place-items: center; position: absolute; z-index: 3; right: max(1.4rem, env(safe-area-inset-right)); bottom: max(2.4rem, env(safe-area-inset-bottom));
+        width: 78px; height: 78px; border-radius: 50%; border: 1px solid var(--gold); background: rgba(14, 22, 70, 0.7); color: var(--gold);
+        font: inherit; font-size: 1.5rem; touch-action: manipulation; opacity: 0.45; transition: opacity 0.2s, background 0.2s;
+    }
+    .act.ready { opacity: 1; background: rgba(214, 179, 112, 0.35); color: var(--text); }
+    .w-controls { display: none; }
+    .w-prompt { bottom: 10.5rem; padding: 0.55rem 1rem; font-size: 0.85rem; }
+}
+
+/* info window */
+.w-panel, .w-intro {
+    position: absolute; inset: 0; z-index: 10; display: grid; place-items: center; padding: 1rem;
+    background: rgba(5, 8, 22, 0.6); touch-action: pan-y;
+}
+.w-card {
+    position: relative; width: min(100%, 34rem); max-height: calc(100% - 1rem); overflow-y: auto; padding: 1.75rem 1.75rem 1.5rem;
+    background: linear-gradient(160deg, #11194f, #090d29); border: 1px solid var(--gold);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55); animation: cardIn 0.3s ease; user-select: text; -webkit-user-select: text;
+}
+.w-card.small { text-align: center; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(14px) scale(0.98); } }
+.w-card h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.7rem, 5vw, 2.3rem); line-height: 1.1; margin-bottom: 0.9rem; }
+.w-card p { color: var(--muted); margin: 0 0 0.9rem; }
+.w-card .eyebrow { margin-bottom: 0.5rem; }
+.w-card .w-keys { font-size: 0.78rem; letter-spacing: 0.06em; opacity: 0.85; }
+.w-card .btn { margin-top: 0.4rem; }
+.w-x { z-index: 3; position: absolute; top: 0.4rem; right: 0.6rem; width: 44px; height: 44px; background: none; border: 0; color: var(--text); font-size: 1.8rem; cursor: pointer; line-height: 1; }
+.w-x:hover { color: var(--gold); }
+.w-media { margin: -0.4rem -0.4rem 1.1rem; border: 1px solid var(--line); background: #000; aspect-ratio: 16 / 9; }
+.w-media video, .w-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.w-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1rem; padding: 0; list-style: none; }
+.w-chips li { padding: 0.3rem 0.8rem; border: 1px solid var(--line); color: var(--text); font-size: 0.85rem; }
+.w-chips li.tag { color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.7rem; }
+.w-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.4rem; }
+.w-links .btn-link { min-width: 0; }
+
+@media (max-width: 560px) {
+    .w-top .w-back-text, .w-btn span[data-i18n="w_back"] { display: none; }
+    .w-places select { max-width: 7.5rem; }
+    .w-card { padding: 1.4rem 1.2rem 1.2rem; }
+}
+
+.w-banner {
+    position: absolute; top: 4.4rem; left: 50%; transform: translateX(-50%); z-index: 2; max-width: calc(100vw - 2rem); text-align: center;
+    font-family: var(--serif); font-size: clamp(1.2rem, 4vw, 1.8rem); letter-spacing: 0.06em; color: var(--gold);
+    text-shadow: 0 2px 12px var(--bg), 0 0 3px var(--bg); opacity: 0; transition: opacity 0.6s; pointer-events: none;
+}
+.w-banner.show { opacity: 1; }

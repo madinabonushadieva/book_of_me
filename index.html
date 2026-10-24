@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Book of Me — Choose a version</title>
+    <link rel="icon" href="data:,">
+    <style>
+        :root { --bg:#050816; --gold:#d6b370; --text:#ecebf7; --muted:#a3a6c8; --line:rgba(214,179,112,.35); }
+        * { box-sizing: border-box; }
+        body { margin:0; min-height:100vh; display:grid; place-items:center; padding:2rem 1.25rem; color:var(--text);
+               font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.6;
+               background: radial-gradient(ellipse 60% 50% at 80% 10%, rgba(108,82,217,.25), transparent), radial-gradient(ellipse 70% 60% at 10% 100%, rgba(14,22,70,.9), transparent), var(--bg); }
+        main { width:min(100%, 62rem); }
+        h1 { font-family: "Palatino Linotype", Palatino, Georgia, serif; font-weight:500; font-size:clamp(2.2rem,6vw,3.6rem); margin:0 0 .4rem; }
+        .sub { color:var(--muted); margin:0 0 2.2rem; }
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+        a.card { display:flex; flex-direction:column; gap:.6rem; padding:1.6rem; border:1px solid var(--line); text-decoration:none; color:inherit;
+                 background:rgba(14,22,70,.35); transition: background .3s, border-color .3s, transform .3s; }
+        a.card:hover, a.card:focus-visible { background:rgba(214,179,112,.12); border-color:var(--gold); transform:translateY(-3px); outline:none; }
+        .tag { align-self:flex-start; font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); border:1px solid var(--line); padding:.15rem .6rem; }
+        h2 { font-family: "Palatino Linotype", Palatino, Georgia, serif; font-weight:500; font-size:1.7rem; margin:0; }
+        p { margin:0; color:var(--muted); font-size:.95rem; }
+        .go { margin-top:auto; padding-top:.8rem; color:var(--gold); letter-spacing:.12em; text-transform:uppercase; font-size:.78rem; }
+        @media (max-width:720px) { .grid { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+<main>
+    <h1>The Book of Me</h1>
+    <p class="sub">Two independent versions of the same portfolio / Bir portfolioning ikki mustaqil versiyasi</p>
+    <div class="grid">
+        <a class="card" href="v1-original/index.html">
+            <span class="tag">Version 1 · Original</span>
+            <h2>Galaxy &amp; Magic Book</h2>
+            <p>Star map, cinematic video chapters, About, Skills, Projects. The original design and animations.</p>
+            <span class="go">Open version 1 →</span>
+        </a>
+        <a class="card" href="v2-interactive-world/index.html">
+            <span class="tag">Version 2 · Interactive World</span>
+            <h2>Portfolio + 2.5D World</h2>
+            <p>Professional portfolio page plus an isometric world of floating islands. Press “Explore My World”.</p>
+            <span class="go">Open version 2 →</span>
+        </a>
+    </div>
+</main>
+</body>
+</html>
